@@ -78,59 +78,140 @@ export const departments: Department[] = [
 
 export type AdDeal = {
   title: string;
+  /** Primary price display, e.g. "3.99", "79¢", "2/$5" */
   price: string;
   unit: string;
+  badge?: string;
+  featured?: boolean;
 };
 
-export type AdPage = {
+export type AdCategory = {
   id: string;
   label: string;
   deals: AdDeal[];
 };
 
+/** Sampled from the Sept 9–15 circular — curated for digital browsing, not a full reprint. */
 export const weeklyAd = {
-  validity: "Valid this week — sample circular mockup",
-  note: "Preview only. Open the official weekly ad for current Algonquin specials.",
-  pages: [
+  validity: "Prices effective Sept 9 – Sept 15",
+  note: "Same weekly specials — redesigned for the web. Browse by department instead of scanning a packed sheet.",
+  categories: [
     {
       id: "produce",
       label: "Produce",
       deals: [
-        { title: "Organic Strawberries", price: "$3.99", unit: "16 oz" },
-        { title: "Hass Avocados", price: "$1.49", unit: "each" },
-        { title: "Baby Spinach", price: "$2.49", unit: "5 oz" },
-        { title: "Honeycrisp Apples", price: "$2.99", unit: "lb" },
+        {
+          title: "Seedless Watermelons",
+          price: "4.99",
+          unit: "each",
+          badge: "Locally grown",
+          featured: true,
+        },
+        { title: "Cuties Mandarins", price: "4.99", unit: "3 lb bag" },
+        { title: "Hass Avocados", price: "1.29", unit: "each" },
+        { title: "Sweet Corn", price: "4/$5", unit: "ears" },
+        { title: "Red or Green Seedless Grapes", price: "1.99", unit: "lb" },
+        { title: "Bananas", price: "59¢", unit: "lb" },
       ],
     },
     {
       id: "meat",
       label: "Meat",
       deals: [
-        { title: "USDA Choice Ribeye", price: "$12.99", unit: "lb" },
-        { title: "Smokehouse Bacon", price: "$4.99", unit: "12 oz" },
-        { title: "Ground Chuck 80/20", price: "$4.49", unit: "lb" },
-        { title: "Chicken Drumsticks", price: "$1.79", unit: "lb" },
+        {
+          title: "USDA Choice Black Angus Beef Inner Skirt Steak",
+          price: "8.99",
+          unit: "lb",
+          badge: "USDA Choice",
+          featured: true,
+        },
+        { title: "USDA Choice Black Angus Beef Pepper Steak", price: "8.49", unit: "lb" },
+        { title: "Pork Center Cut Chops", price: "2.99", unit: "lb · family pack" },
+        { title: "Chicken Thighs", price: "1.49", unit: "lb · family pack" },
+        { title: "Smokehouse Bacon", price: "4.99", unit: "12 oz" },
+        { title: "Ground Chuck 80/20", price: "4.49", unit: "lb" },
+      ],
+    },
+    {
+      id: "seafood",
+      label: "Seafood",
+      deals: [
+        {
+          title: "Atlantic Salmon Fillets",
+          price: "9.99",
+          unit: "lb",
+          featured: true,
+        },
+        { title: "Cod Fillets", price: "7.99", unit: "lb" },
+        { title: "Tilapia Fillets", price: "5.99", unit: "lb" },
+        { title: "Cooked Shrimp Ring", price: "12.99", unit: "each" },
       ],
     },
     {
       id: "bakery",
       label: "Bakery",
       deals: [
-        { title: "Artisan Sourdough", price: "$3.49", unit: "loaf" },
-        { title: "European Butter Croissants", price: "$5.99", unit: "4 ct" },
-        { title: "Rye Bread", price: "$2.99", unit: "loaf" },
-        { title: "Assorted Danish", price: "$6.49", unit: "6 ct" },
+        {
+          title: "Raspberry Cloud Cake",
+          price: "14.99",
+          unit: "each",
+          badge: "Our very own",
+          featured: true,
+        },
+        { title: "French Baguettes", price: "1.99", unit: "each" },
+        { title: "Tiramisu Cake", price: "16.99", unit: "each" },
+        { title: "Fresh Donuts", price: "5.99", unit: "dozen" },
+        { title: "Sliced Sandwich Bread", price: "2.49", unit: "loaf" },
+      ],
+    },
+    {
+      id: "deli",
+      label: "Deli",
+      deals: [
+        {
+          title: "Boar's Head Ovengold Turkey",
+          price: "9.99",
+          unit: "lb",
+          featured: true,
+        },
+        { title: "Polish Ham", price: "6.99", unit: "lb" },
+        { title: "Oaxaca Cheese", price: "5.99", unit: "lb" },
+        { title: "Queso Blanco", price: "4.99", unit: "lb" },
+        { title: "Farmers Cheese", price: "3.99", unit: "lb" },
+      ],
+    },
+    {
+      id: "international",
+      label: "International",
+      deals: [
+        {
+          title: "Jasmine Rice",
+          price: "12.99",
+          unit: "25 lb",
+          featured: true,
+        },
+        { title: "Silver Swan Soy Sauce", price: "2.49", unit: "bottle" },
+        { title: "Jarritos Assorted", price: "99¢", unit: "each" },
+        { title: "Góralki Polish Wafers", price: "2/$5", unit: "pack" },
+        { title: "Coconut Milk", price: "1.79", unit: "can" },
       ],
     },
     {
       id: "grocery",
       label: "Grocery",
       deals: [
-        { title: "Extra Virgin Olive Oil", price: "$7.99", unit: "750 ml" },
-        { title: "Imported Pasta", price: "$1.29", unit: "16 oz" },
-        { title: "Whole Milk", price: "$3.19", unit: "gallon" },
-        { title: "Sparkling Water", price: "$3.99", unit: "12 pk" },
+        {
+          title: "Prince Pasta",
+          price: "1.29",
+          unit: "16 oz · excl. lasagna",
+          featured: true,
+        },
+        { title: "Quaker Oats", price: "3.99", unit: "42 oz" },
+        { title: "Cheez-It", price: "2/$5", unit: "select sizes" },
+        { title: "Coke or Pepsi 12-Pack", price: "5.99", unit: "12 pk cans" },
+        { title: "Bottled Water", price: "3.99", unit: "24 pk" },
+        { title: "Fiora Bath Tissue", price: "5.99", unit: "12 rolls" },
       ],
     },
-  ] satisfies AdPage[],
+  ] satisfies AdCategory[],
 };
