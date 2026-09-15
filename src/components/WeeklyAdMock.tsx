@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { store, weeklyAd, type AdDeal } from "@/lib/content";
 
@@ -115,6 +116,12 @@ export function WeeklyAdMock() {
           </div>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <p className="text-sm font-semibold text-forest">{weeklyAd.validity}</p>
+            <Link
+              href="/shop"
+              className="inline-flex items-center justify-center bg-forest px-5 py-2.5 text-sm font-semibold text-paper transition hover:bg-forest-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
+            >
+              Shop for pickup
+            </Link>
             <a
               href={store.weeklyAdUrl}
               target="_blank"

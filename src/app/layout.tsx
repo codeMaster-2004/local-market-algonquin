@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Outfit } from "next/font/google";
+import { CartProvider } from "@/components/cart/CartProvider";
+import { SiteNav } from "@/components/SiteNav";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -15,7 +17,10 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "Local Market Shop & Save | Algonquin, IL",
+  title: {
+    default: "Local Market Shop & Save | Algonquin, IL",
+    template: "%s | Local Market Algonquin",
+  },
   description:
     "Neighborhood grocery at 100 S Randall Rd, Algonquin. Fresh produce, smokehouse meats, European bakery, and international favorites — formerly Butera Market.",
   openGraph: {
@@ -37,7 +42,12 @@ export default function RootLayout({
       lang="en"
       className={`${outfit.variable} ${fraunces.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans text-ink">{children}</body>
+      <body className="flex min-h-full flex-col font-sans text-ink">
+        <CartProvider>
+          <SiteNav />
+          <div className="flex flex-1 flex-col">{children}</div>
+        </CartProvider>
+      </body>
     </html>
   );
 }

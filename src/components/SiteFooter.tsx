@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { store } from "@/lib/content";
 
 export function SiteFooter() {
@@ -23,14 +24,37 @@ export function SiteFooter() {
           </p>
         </div>
         <div className="flex flex-col gap-2 sm:items-end">
-          <a
-            href={store.facebookUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-semibold text-leaf transition hover:text-forest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-leaf"
+          <nav
+            aria-label="Footer"
+            className="flex flex-wrap gap-x-4 gap-y-2 sm:justify-end"
           >
-            Follow on Facebook
-          </a>
+            <Link
+              href="/shop"
+              className="text-sm font-semibold text-leaf transition hover:text-forest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-leaf"
+            >
+              Shop
+            </Link>
+            <Link
+              href="/deals"
+              className="text-sm font-semibold text-leaf transition hover:text-forest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-leaf"
+            >
+              Deals
+            </Link>
+            <Link
+              href="/cart"
+              className="text-sm font-semibold text-leaf transition hover:text-forest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-leaf"
+            >
+              Cart
+            </Link>
+            <a
+              href={store.facebookUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-semibold text-leaf transition hover:text-forest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-leaf"
+            >
+              Facebook
+            </a>
+          </nav>
           <p className="text-xs text-muted">
             © {year} {store.name}. All rights reserved.
           </p>

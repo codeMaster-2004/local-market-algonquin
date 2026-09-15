@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { store } from "@/lib/content";
 
 export function Hero() {
@@ -39,20 +40,18 @@ export function Hero() {
           {store.support}
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-3">
-          <a
-            href="#weekly-ad"
+          <Link
+            href="/shop"
             className="inline-flex items-center justify-center bg-citrus px-6 py-3 text-sm font-semibold tracking-wide text-forest-deep transition hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-citrus"
           >
-            View weekly ad
-          </a>
-          <a
-            href={store.mapsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            Shop for pickup
+          </Link>
+          <Link
+            href="/deals"
             className="inline-flex items-center justify-center border border-paper/50 bg-paper/10 px-6 py-3 text-sm font-semibold tracking-wide text-paper backdrop-blur-sm transition hover:bg-paper/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
           >
-            Get directions
-          </a>
+            View weekly deals
+          </Link>
         </div>
       </div>
     </section>
