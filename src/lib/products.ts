@@ -93,6 +93,7 @@ export const products: Product[] = [
     stock: "in-stock",
     description: "Ripe vine tomatoes with bright flavor.",
     accent: "#e8b4a8",
+    image: "/products/vine-tomatoes.webp",
   },
   {
     id: "tomato-roma",
@@ -106,6 +107,7 @@ export const products: Product[] = [
     stock: "low-stock",
     description: "Meaty romas for sauces and roasting.",
     accent: "#d99084",
+    image: "/products/roma-tomatoes.jpg",
   },
   {
     id: "orange-navel",
@@ -119,6 +121,7 @@ export const products: Product[] = [
     stock: "in-stock",
     description: "Juicy navels — snack or juice.",
     accent: "#f0c078",
+    image: "/products/navel-oranges.png",
   },
   {
     id: "banana-bulk",
@@ -132,6 +135,7 @@ export const products: Product[] = [
     stock: "in-stock",
     description: "Everyday bananas priced by the pound.",
     accent: "#f5e6a3",
+    image: "/products/bananas.avif",
   },
   {
     id: "avocado-hass",
@@ -145,6 +149,7 @@ export const products: Product[] = [
     stock: "in-stock",
     description: "Creamy Hass avocados, sold individually.",
     accent: "#c5d4a8",
+    image: "/products/hass-avocados.jpeg",
   },
 
   // —— Oats (by count / package) ——
@@ -202,6 +207,7 @@ export const products: Product[] = [
     stock: "in-stock",
     description: "Flavored instant packets — maple, apple, cinnamon.",
     accent: "#f0e8d8",
+    image: "/products/quaker-instant-variety.avif",
   },
   {
     id: "oats-kodiak",
@@ -242,6 +248,7 @@ export const products: Product[] = [
     stock: "in-stock",
     description: "Quaker protein instant oatmeal cups/packets.",
     accent: "#ebe2d2",
+    image: "/products/protein-instant-oatmeal.jpg",
   },
 
   // —— More grocery by count ——

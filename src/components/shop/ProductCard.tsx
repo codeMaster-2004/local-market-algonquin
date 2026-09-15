@@ -74,15 +74,10 @@ export function ProductCard({ product }: { product: Product }) {
             aria-hidden
           />
         )}
-        <div
-          className={`absolute inset-x-0 bottom-0 px-4 pb-3 pt-10 ${
-            product.category === "grocery"
-              ? "bg-gradient-to-t from-forest-deep/35 to-transparent"
-              : "bg-gradient-to-t from-forest-deep/55 to-transparent"
-          }`}
-        >
-          <StockBadge stock={product.stock} />
-        </div>
+      </div>
+
+      <div className="border-b border-forest/10 px-5 py-2.5 sm:px-6">
+        <StockBadge stock={product.stock} />
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-5 sm:p-6">
