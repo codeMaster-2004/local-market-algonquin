@@ -37,6 +37,17 @@ type CartContextValue = {
 
 const CartContext = createContext<CartContextValue | null>(null);
 
+/** In-memory fallback when localStorage is blocked (private mode, etc.). */
+let memoryLines: CartLine[] = [];
+/** Cached snapshot — getSnapshot must return a stable reference when unchanged. */
+let cachedSnapshot: CartLine[] = [];
+let cachedSerialized = "[]";
+const listeners = new Set<() => void>();
+
+function emit() {
+  listeners.forEach((listener) => listener());
+}
+
 function normalizeQuantity(product: Product, quantity: number): number {
   if (product.sellBy === "weight") {
     const stepped = Math.round(quantity * 4) / 4;
@@ -61,42 +72,102 @@ function parseLines(raw: string | null): CartLine[] {
   }
 }
 
-function readLines(): CartLine[] {
-  return parseLines(window.localStorage.getItem(STORAGE_KEY));
+function sameLines(a: CartLine[], b: CartLine[]): boolean {
+  if (a === b) return true;
+  if (a.length !== b.length) return false;
+  return a.every(
+    (line, i) =>
+      line.productId === b[i].productId && line.quantity === b[i].quantity,
+  );
+}
+
+function readStoredLines(): CartLine[] {
+  try {
+    return parseLines(window.localStorage.getItem(STORAGE_KEY));
+  } catch {
+    return memoryLines;
+  }
+}
+
+/** Stable getSnapshot for useSyncExternalStore (React error #185 if unstable). */
+function getSnapshot(): CartLine[] {
+  const next = readStoredLines();
+  const serialized = JSON.stringify(next);
+  if (serialized === cachedSerialized && sameLines(next, cachedSnapshot)) {
+    return cachedSnapshot;
+  }
+  cachedSerialized = serialized;
+  cachedSnapshot = next;
+  return cachedSnapshot;
 }
 
 function writeLines(lines: CartLine[]) {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(lines));
-  window.dispatchEvent(new Event("local-market-cart"));
+  memoryLines = lines;
+  cachedSerialized = JSON.stringify(lines);
+  cachedSnapshot = lines;
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(lines));
+  } catch {
+    // private mode / quota — keep memory copy
+  }
+  emit();
+  try {
+    window.dispatchEvent(new Event("local-market-cart"));
+  } catch {
+    // ignore
+  }
 }
 
 function subscribe(onStoreChange: () => void) {
+  listeners.add(onStoreChange);
   const handler = () => onStoreChange();
-  window.addEventListener("storage", handler);
-  window.addEventListener("local-market-cart", handler);
+  try {
+    window.addEventListener("storage", handler);
+    window.addEventListener("local-market-cart", handler);
+  } catch {
+    // ignore
+  }
   return () => {
-    window.removeEventListener("storage", handler);
-    window.removeEventListener("local-market-cart", handler);
+    listeners.delete(onStoreChange);
+    try {
+      window.removeEventListener("storage", handler);
+      window.removeEventListener("local-market-cart", handler);
+    } catch {
+      // ignore
+    }
   };
 }
 
+const EMPTY: CartLine[] = [];
+
 function getServerSnapshot(): CartLine[] {
-  return [];
+  return EMPTY;
+}
+
+const clientReadySnapshot = true;
+const serverReadySnapshot = false;
+
+function getReadySnapshot() {
+  return clientReadySnapshot;
+}
+
+function getReadyServerSnapshot() {
+  return serverReadySnapshot;
 }
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const lines = useSyncExternalStore(subscribe, readLines, getServerSnapshot);
+  const lines = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const ready = useSyncExternalStore(
     subscribe,
-    () => true,
-    () => false,
+    getReadySnapshot,
+    getReadyServerSnapshot,
   );
 
   const addItem = useCallback((productId: string, quantity: number) => {
     const product = getProduct(productId);
     if (!product || product.stock === "out-of-stock") return;
     const qty = normalizeQuantity(product, quantity);
-    const current = readLines();
+    const current = getSnapshot();
     const existing = current.find((l) => l.productId === productId);
     if (existing) {
       writeLines(
@@ -117,7 +188,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const setQuantity = useCallback((productId: string, quantity: number) => {
     const product = getProduct(productId);
     if (!product) return;
-    const current = readLines();
+    const current = getSnapshot();
 
     if (quantity <= 0) {
       writeLines(current.filter((l) => l.productId !== productId));
@@ -133,7 +204,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const removeItem = useCallback((productId: string) => {
-    writeLines(readLines().filter((l) => l.productId !== productId));
+    writeLines(getSnapshot().filter((l) => l.productId !== productId));
   }, []);
 
   const clear = useCallback(() => writeLines([]), []);

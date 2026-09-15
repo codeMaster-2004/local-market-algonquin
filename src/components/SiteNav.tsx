@@ -40,16 +40,16 @@ export function SiteNav() {
 
   return (
     <header
-      className={`sticky top-0 z-40 border-b transition-colors ${
+      className={`sticky top-0 z-50 border-b ${
         isHome
-          ? "border-paper/10 bg-forest-deep/85 text-paper backdrop-blur-md"
-          : "border-forest/10 bg-paper/95 text-ink backdrop-blur-md"
+          ? "border-paper/15 bg-forest-deep text-paper"
+          : "border-forest/10 bg-paper text-ink"
       }`}
     >
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-6 sm:h-16 sm:px-8">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4 sm:h-16 sm:gap-4 sm:px-8">
         <Link
           href="/"
-          className={`font-display text-base font-semibold tracking-tight transition sm:text-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
+          className={`shrink-0 font-display text-base font-semibold tracking-tight transition sm:text-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
             isHome
               ? "text-paper focus-visible:outline-paper"
               : "text-forest focus-visible:outline-forest"
@@ -58,7 +58,10 @@ export function SiteNav() {
           {store.shortName}
         </Link>
 
-        <nav aria-label="Primary" className="flex items-center gap-1 sm:gap-2">
+        <nav
+          aria-label="Primary"
+          className="flex items-center gap-0.5 sm:gap-1"
+        >
           {links.map((link) => {
             const active =
               pathname === link.href || pathname.startsWith(`${link.href}/`);
@@ -67,11 +70,11 @@ export function SiteNav() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3 py-2 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
+                className={`px-2.5 py-2 text-sm font-semibold transition sm:px-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
                   isHome
                     ? active
                       ? "text-citrus focus-visible:outline-citrus"
-                      : "text-paper/85 hover:text-paper focus-visible:outline-paper"
+                      : "text-paper hover:text-citrus focus-visible:outline-paper"
                     : active
                       ? "text-forest focus-visible:outline-forest"
                       : "text-muted hover:text-forest focus-visible:outline-forest"
@@ -89,29 +92,13 @@ export function SiteNav() {
                 ? `Pickup cart, ${count} items`
                 : "Pickup cart, empty"
             }
-            className={`ml-1 inline-flex items-center gap-2 px-3 py-2 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
-              isHome
-                ? cartActive
-                  ? "bg-citrus text-forest-deep focus-visible:outline-citrus"
-                  : "bg-paper/15 text-paper hover:bg-paper/25 focus-visible:outline-paper"
-                : cartActive
-                  ? "bg-forest text-paper focus-visible:outline-forest"
-                  : "bg-sage text-forest hover:bg-sage/80 focus-visible:outline-forest"
+            className={`ml-1 inline-flex items-center gap-1.5 bg-citrus px-3 py-2 text-sm font-bold tracking-wide text-forest-deep transition hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-citrus sm:gap-2 sm:px-4 ${
+              cartActive ? "ring-2 ring-paper ring-offset-2 ring-offset-forest-deep" : ""
             }`}
           >
             <CartIcon className="h-4 w-4 shrink-0" />
-            <span className="hidden sm:inline">Cart</span>
-            <span
-              className={`inline-flex min-w-[1.25rem] items-center justify-center px-1 text-xs font-bold tabular-nums ${
-                isHome
-                  ? cartActive
-                    ? "text-forest-deep"
-                    : "bg-citrus text-forest-deep"
-                  : cartActive
-                    ? "text-citrus"
-                    : "bg-forest text-paper"
-              }`}
-            >
+            <span>Cart</span>
+            <span className="inline-flex min-w-[1.25rem] items-center justify-center bg-forest-deep px-1 text-xs font-bold tabular-nums text-paper">
               {count > 99 ? "99+" : count}
             </span>
           </Link>
