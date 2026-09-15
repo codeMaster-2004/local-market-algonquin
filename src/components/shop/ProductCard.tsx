@@ -56,10 +56,14 @@ export function ProductCard({ product }: { product: Product }) {
         {product.image ? (
           <Image
             src={product.image}
-            alt=""
+            alt={product.name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover opacity-90"
+            className={
+              product.category === "grocery"
+                ? "object-contain p-5 sm:p-6"
+                : "object-cover"
+            }
           />
         ) : (
           <div
@@ -70,7 +74,13 @@ export function ProductCard({ product }: { product: Product }) {
             aria-hidden
           />
         )}
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-forest-deep/55 to-transparent px-4 pb-3 pt-10">
+        <div
+          className={`absolute inset-x-0 bottom-0 px-4 pb-3 pt-10 ${
+            product.category === "grocery"
+              ? "bg-gradient-to-t from-forest-deep/35 to-transparent"
+              : "bg-gradient-to-t from-forest-deep/55 to-transparent"
+          }`}
+        >
           <StockBadge stock={product.stock} />
         </div>
       </div>

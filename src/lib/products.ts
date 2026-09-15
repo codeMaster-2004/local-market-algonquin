@@ -35,6 +35,7 @@ export const products: Product[] = [
     stock: "in-stock",
     description: "Mild, crisp white onions — great for salsas and grilling.",
     accent: "#f5f0e6",
+    image: "/products/white-onions.webp",
   },
   {
     id: "onion-yellow",
@@ -48,6 +49,7 @@ export const products: Product[] = [
     stock: "in-stock",
     description: "Everyday yellow onions for soups, sauces, and roasting.",
     accent: "#f0e4c8",
+    image: "/products/yellow-onions.webp",
   },
   {
     id: "onion-small",
@@ -61,6 +63,7 @@ export const products: Product[] = [
     stock: "low-stock",
     description: "Petite onions ideal for stews and boiling — limited this week.",
     accent: "#ebe6d9",
+    image: "/products/small-onions.jpg",
   },
 
   // —— Other produce by weight ——
@@ -157,6 +160,7 @@ export const products: Product[] = [
     stock: "in-stock",
     description: "Hearty steel-cut oats with a chewy bite.",
     accent: "#e8dcc8",
+    image: "/products/quaker-steel-cut.webp",
   },
   {
     id: "oats-old-fashioned",
@@ -170,6 +174,7 @@ export const products: Product[] = [
     stock: "in-stock",
     description: "Classic rolled oats — not cut. The pantry staple.",
     accent: "#efe6d4",
+    image: "/products/quaker-old-fashioned.png",
   },
   {
     id: "oats-quick",
@@ -183,6 +188,7 @@ export const products: Product[] = [
     stock: "low-stock",
     description: "Faster-cooking Quaker oats for busy mornings.",
     accent: "#e6dcc8",
+    image: "/products/quaker-quick-oats.avif",
   },
   {
     id: "oats-instant-packets",
@@ -209,6 +215,7 @@ export const products: Product[] = [
     stock: "in-stock",
     description: "Protein-packed Kodiak oats for a fuller breakfast.",
     accent: "#d9cfc0",
+    image: "/products/kodiak-oats.webp",
   },
   {
     id: "oats-bob-red",
