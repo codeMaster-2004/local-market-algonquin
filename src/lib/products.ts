@@ -79,7 +79,7 @@ export const products: Product[] = [
     stock: "in-stock",
     description: "Sweet, crunchy carrots sold by the pound.",
     accent: "#f3c28a",
-    image: "/departments/produce.jpg",
+    image: "/products/carrots.jpg",
   },
   {
     id: "tomato-vine",
